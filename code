@@ -1,0 +1,79 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main (String[] args) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Введите текст: ");
+        String intext = scan.nextLine();
+
+        intext = deliteSpase(intext);
+
+        intext = charMove(intext);
+
+        intext = charEdit(intext);
+
+        intext = sumNum(intext);
+
+        System.out.println(intext);
+    }
+    public static String deliteSpase(String row) {
+        StringBuilder result = new StringBuilder();
+        boolean spaceFound = false;
+
+        for (int i = 0;i<row.length();i++) {
+            char massiv = row.charAt(i);
+            if (massiv == ' ') {
+                if (spaceFound == false) {
+                    result.append(' ');
+                    spaceFound = true;
+                }
+            } else { result.append(massiv);
+                spaceFound = false;
+                }
+            }
+        return result.toString();
+    }
+
+    public static String charMove(String row) {
+
+        char [] massiv = row.toCharArray();
+        for (int i = 1; i< massiv.length - 1; i++) {
+            if (massiv[i] == '-') {
+                char save = massiv[i - 1];
+                massiv[i - 1] = massiv[i + 1];
+                massiv[i + 1] = save;
+                massiv[i] = '0';
+            }
+            }
+        String ClearString = new String(massiv).replace("0","");
+        return ClearString;
+    }
+
+    public static String charEdit(String row) {
+        char[] massiv = row.toCharArray();
+        for (int i = 0; i < massiv.length; i++) {
+            if (massiv[i] == '+') {
+                massiv[i] = '!';
+            }
+        }
+        return new String(massiv);
+    }
+
+    public static String sumNum(String row) {
+        StringBuilder result = new StringBuilder();
+        int sum = 0; // Создаем переменную для подсчета итоговой суммы
+        for (int i = 0;i<row.length();i++) {
+            char ch = row.charAt(i);// Перебираем строчку по символам
+            if (ch >= '0' && ch <= '9'  ) { // Если символ это цифра от 0-9
+                sum += ch - '0'; // преобразоываем его в массив и добавляем его к сумме
+            } else {  // В обратном случае
+                result.append(ch); // Переносим символ в строку-результат
+            }
+        }
+        if (sum > 0) { // Если сумма больше 0
+            return result.toString() + " " + sum; // Возвращаем строку с суммой
+        } else {
+            return result.toString();
+        }
+    }
+    }
